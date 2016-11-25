@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"                                                
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" land="ru" xml:lang="en" ng-app="antSummApp">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="Content-Language" content="ru-ru"/>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <title></title>
+        <link href="style.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <script src="angular.min.js"></script>
+        <script src="controllers.js"></script>
+        <style>
+            body{
+                    font:30px Arial, Helvetica, sans-serif;
+                    color:#000;	
+                    margin:0; padding:0;
+                    text-align: center;
+                    background-color: #ddd;
+                    font-weight: bold;
+                }
+            table{
+                width: 90%;
+                margin: 0 auto 50px auto;
+                border-collapse: collapse;
+            }
+            tr.last td {
+                border-top: 50px solid #ccc;
+            }
+            table td{
+                width: 33%;
+                padding: 20px 0;
+                background-color: #fff;
+                border: 10px solid #ccc;
+            }
+            td.active { background-color: #06fd05; }
+        </style>
+    </head>
+    <body ng-controller="antSummCtrl">
+        <table id="band">
+            <tr>
+                <td ng-repeat="cluster in clusters"
+                    ng-class="{'active': activeCluster == cluster }" 
+                    ng-click="setActiveCluster( cluster )">
+                {{cluster.title}}
+                </td>
+            </tr>
+        </table>
+        <div ng-if="activeCluster">
+            <table id="band">
+                <tr>
+                    <td ng-repeat="terminal in activeCluster.terminals">
+                        Панель {{terminal.host}}
+                    </td>
+                </tr>
+            </table>
+            <table id="band">
+                <tr>
+                    <td ng-repeat="controller in activeCluster.controllers"
+                        ng-click="setActiveController( $index )"
+                        ng-class="{'active': activeCluster.activeController == controller }">
+                        {{controller.title}}<br/>
+                        {{controller.host}}
+                    </td>
+            </table>
+            <table id="buttons">
+                <tr ng-repeat="n in range(1, controller.lines) | orderBy:'-' "
+                    ng-class="{'last': $last}">
+                    <td
+                        ng-repeat-start="combo in $parent.controller.combos[n]"
+                        ng-class="{'active': $parent.controller.activeCombo.title == combo.title }"
+                        ng-click="$parent.setActiveCombo( combo )"
+                        colspan="{{$parent.$first ? n - 1 : ''}}">{{combo.title}}
+                    </td>
+                    <td ng-repeat-end ng-if="$parent.$first" ng-class="{'active': $parent.lock}"
+                        ng-click="$parent.lock = !$parent.lock">Lock
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+
