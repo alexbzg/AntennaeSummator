@@ -140,3 +140,5 @@ $RECYCLE.BIN/
 
 *.swp
 web/angular.*
+*.zip
+WX0B/

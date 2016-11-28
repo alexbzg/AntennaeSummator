@@ -131,6 +131,7 @@ class Terminal:
             self.terminal = terminal
             self.lineNo = lineNo
             self.switch = switch
+            self.terminal.controller.setLineMode( lineNo, 'in' )
             self.terminal.controller.setCallback( lineNo, self.onLine )
 
         def onLine( self, val ):
@@ -156,6 +157,7 @@ class Terminal:
         for switchEntry in self.template['switches']:
             switch = [ x for x in switches if x.combo == tuple(switchEntry['combo']) ][0]
             self.switchLeds[switch] = switchEntry['led']
+            self.controller.setLineMode( switchEntry['led'], 'out' )
             self.switchLines.append( Terminal.SwitchLine( self, switchEntry['button'], switch ) )
         self.controller.setLineMode( self.template['lock']['button'], 'in' )
         self.controller.setLineMode( self.template['lock']['led'], 'out' )

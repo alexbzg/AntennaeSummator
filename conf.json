@@ -55,23 +55,10 @@
       "title": "Левое",
       "terminals": 
         [{
-          "host": "192.168.1.251",
+          "host": "192.168.1.229",
           "template": "terminal"
         }],
-      "controllers": [
-        {
-          "host": "192.168.1.227",
-          "title": "10",
-          "template": "controller",
-          "active": true
-        },
-        {
-          "host": "192.168.1.249",
-          "title": "15",
-          "template": "controller"
-        }
-       
-      ]
+      "controllers": []
     }
   ],
     "http_port" : 8080
